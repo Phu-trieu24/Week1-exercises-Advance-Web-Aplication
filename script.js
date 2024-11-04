@@ -1,109 +1,40 @@
 // Lấy phần tử container trong HTML
 const container = document.querySelector(".container");
 
-// Hàm lấy ảnh ngẫu nhiên của giống chó từ API
-async function fetchDogImage(breed) {
+// Hàm gọi Wikipedia API để lấy văn bản tóm tắt cho giống chó
+async function fetchWikiText(breed) {
+    const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${breed}`;
     try {
-        const response = await fetch(
-            `https://dog.ceo/api/breed/${breed}/images/random`
-        );
+        const response = await fetch(apiUrl);
         const data = await response.json();
-        return data.message; // Trả về URL ảnh
+        return data.extract || "No information available.";
     } catch (error) {
-        console.error("Error fetching dog image:", error);
-        return null; // Trả về null nếu có lỗi
+        console.error("Lỗi khi gọi Wikipedia API:", error);
+        return "Error loading information.";
     }
 }
 
-// Hàm sinh số ngẫu nhiên trong một khoảng nhất định
-function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+// Hàm gọi Dog API để lấy ảnh ngẫu nhiên cho giống chó
+async function fetchDogImage(breed) {
+    const apiUrl = `https://dog.ceo/api/breed/${breed}/images/random`;
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
 
-// Hàm sinh văn bản ngẫu nhiên từ 70 đến 120 từ
-function generateRandomText() {
-    const words = [
-        "lorem",
-        "ipsum",
-        "dolor",
-        "sit",
-        "amet",
-        "consectetur",
-        "adipiscing",
-        "elit",
-        "sed",
-        "do",
-        "eiusmod",
-        "tempor",
-        "incididunt",
-        "ut",
-        "labore",
-        "et",
-        "dolore",
-        "magna",
-        "aliqua",
-        "ut",
-        "enim",
-        "ad",
-        "minim",
-        "veniam",
-        "quis",
-        "nostrud",
-        "exercitation",
-        "ullamco",
-        "laboris",
-        "nisi",
-        "ut",
-        "aliquip",
-        "ex",
-        "ea",
-        "commodo",
-        "consequat",
-        "duis",
-        "aute",
-        "irure",
-        "dolor",
-        "in",
-        "reprehenderit",
-        "in",
-        "voluptate",
-        "velit",
-        "esse",
-        "cillum",
-        "dolore",
-        "eu",
-        "fugiat",
-        "nulla",
-        "pariatur",
-        "excepteur",
-        "sint",
-        "occaecat",
-        "cupidatat",
-        "non",
-        "proident",
-        "sunt",
-        "in",
-        "culpa",
-        "qui",
-        "officia",
-        "deserunt",
-        "mollit",
-        "anim",
-        "id",
-        "est",
-        "laborum",
-    ];
-    const wordCount = getRandomNumber(70, 120);
-    const randomTextArray = [];
-    for (let i = 0; i < wordCount; i++) {
-        const randomIndex = getRandomNumber(0, words.length - 1);
-        randomTextArray.push(words[randomIndex]);
+        if (data.status !== "success") {
+            console.error(`Không thể lấy hình ảnh cho giống chó: ${breed}`);
+            return "https://via.placeholder.com/150"; // Ảnh mặc định nếu lỗi
+        }
+
+        return data.message; // URL của hình ảnh
+    } catch (error) {
+        console.error("Lỗi khi gọi Dog API:", error);
+        return "https://via.placeholder.com/150"; // Ảnh mặc định nếu lỗi
     }
-    return randomTextArray.join(" ");
 }
 
 // Hàm tạo một mục wiki item
-async function generateWikiItem(title, breed) {
+async function generateWikiItem(breed) {
     // Tạo phần tử <div> chính cho wiki item
     const wikiItem = document.createElement("div");
     wikiItem.className = "wiki-item";
@@ -111,31 +42,34 @@ async function generateWikiItem(title, breed) {
     // Tạo phần tử tiêu đề <h1> và thêm nội dung
     const wikiHeader = document.createElement("h1");
     wikiHeader.className = "wiki-header";
-    wikiHeader.textContent = title;
+    wikiHeader.textContent = breed;
 
     // Tạo phần tử nội dung <div> cho wiki item
     const wikiContent = document.createElement("div");
     wikiContent.className = "wiki-content";
 
+    // Lấy văn bản từ Wikipedia API
+    const text = await fetchWikiText(breed.replace(" ", "_"));
+
     // Tạo phần tử <p> cho văn bản wiki và thêm nội dung
     const wikiText = document.createElement("p");
     wikiText.className = "wiki-text";
-    wikiText.textContent = generateRandomText();
+    wikiText.textContent = text;
+
+    // Lấy ảnh ngẫu nhiên từ Dog API
+    const imgSrc = await fetchDogImage(breed.toLowerCase().replace(" ", ""));
 
     // Tạo <div> chứa hình ảnh
     const imgContainer = document.createElement("div");
     imgContainer.className = "img-container";
 
-    // Lấy ảnh từ API và tạo phần tử <img>
-    const imgSrc = await fetchDogImage(breed);
-    if (imgSrc) {
-        const wikiImage = document.createElement("img");
-        wikiImage.className = "wiki-img";
-        wikiImage.src = imgSrc;
-        imgContainer.appendChild(wikiImage);
-    } else {
-        imgContainer.textContent = "Could not load image.";
-    }
+    // Tạo phần tử <img> và thêm thuộc tính src
+    const wikiImage = document.createElement("img");
+    wikiImage.className = "wiki-img";
+    wikiImage.src = imgSrc;
+
+    // Gắn <img> vào imgContainer
+    imgContainer.appendChild(wikiImage);
 
     // Gắn các phần tử vào wikiContent
     wikiContent.appendChild(wikiText);
@@ -149,10 +83,16 @@ async function generateWikiItem(title, breed) {
     container.appendChild(wikiItem);
 }
 
-// Danh sách các giống chó muốn hiển thị
-const breeds = ["labrador", "poodle", "bulldog", "beagle", "dalmatian"];
+// Tạo dữ liệu mẫu cho các mục wiki item với tên giống chó
+const wikiData = [
+    "Golden Retriever",
+    "Bulldog",
+    "Beagle",
+    "Poodle",
+    "German Shepherd",
+];
 
-// Tạo các mục wiki item với ảnh chó
-breeds.forEach((breed) => {
-    generateWikiItem(`Breed: ${breed}`, breed);
+// Tạo các mục wiki item bằng cách duyệt qua mảng wikiData
+wikiData.forEach((breed) => {
+    generateWikiItem(breed);
 });
