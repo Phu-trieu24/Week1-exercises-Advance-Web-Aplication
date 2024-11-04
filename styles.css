@@ -46,18 +46,21 @@ body {
 @media (min-width: 600px) {
     .wiki-content {
         display: flex;
-        align-items: center;
+        flex-direction: row-reverse; /* Đảo ngược thứ tự: ảnh bên trái, văn bản bên phải */
+        align-items: center; /* Căn giữa ảnh và văn bản theo trục ngang */
         gap: 20px; /* Khoảng cách giữa văn bản và ảnh */
     }
 
     /* Căn chỉnh wiki-text và img-container cho desktop */
     .wiki-text {
-        width: 50%;
+        min-width: 50%;
+        max-width: 50%;
         text-align: left; /* Căn lề trái cho văn bản */
     }
 
     .img-container {
-        width: 50%;
+        min-width: 50%;
+        max-width: 50%;
     }
 
     /* Đảm bảo ảnh chiếm hết img-container */
