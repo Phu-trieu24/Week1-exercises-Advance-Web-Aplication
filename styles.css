@@ -1,0 +1,79 @@
+/* CSS trong file styles.css */
+.wiki-img {
+    width: 100%; /* Ảnh sẽ chiếm toàn bộ chiều rộng của thẻ chứa */
+    height: auto; /* Chiều cao tự động điều chỉnh để giữ tỉ lệ ảnh */
+    display: block; /* Loại bỏ khoảng trắng bên dưới ảnh */
+    border-radius: 8px; /* Bo tròn nhẹ các góc ảnh */
+}
+
+/* CSS cho .wiki-item */
+.wiki-item {
+    margin: 10px 10px; /* Khoảng cách bên trái và bên phải là 10px */
+    border-radius: 10px; /* Bo tròn nhẹ các góc của phần tử */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng đổ */
+    overflow: hidden; /* Cắt các nội dung thừa khỏi phần tử */
+    background-color: white; /* Đặt nền trắng để dễ nhìn */
+}
+
+/* CSS cho .wiki-content */
+.wiki-content {
+    padding: 15px; /* Thêm khoảng cách đều cho tất cả các cạnh */
+}
+
+/* Đặt lại các thiết lập mặc định cho body */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Thiết lập cho hình ảnh */
+.wiki-img {
+    width: 100%; /* Ảnh chiếm toàn bộ chiều rộng của thẻ chứa */
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+/* Thiết lập cho wiki-item */
+.wiki-item {
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    background-color: white;
+}
+
+/* Thiết lập cho wiki-content */
+.wiki-content {
+    padding: 15px;
+}
+
+/* Đặt lại các thiết lập mặc định cho body */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Thiết lập cho hình ảnh */
+.wiki-img {
+    width: 100%; /* Ảnh chiếm toàn bộ chiều rộng của thẻ chứa */
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+/* Thiết lập cho wiki-item */
+.wiki-item {
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    background-color: white;
+}
+
+/* Thiết lập cho wiki-content */
+.wiki-content {
+    padding: 15px;
+}
