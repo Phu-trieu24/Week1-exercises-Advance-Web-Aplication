@@ -1,25 +1,3 @@
-/* CSS trong file styles.css */
-.wiki-img {
-    width: 100%; /* Ảnh sẽ chiếm toàn bộ chiều rộng của thẻ chứa */
-    height: auto; /* Chiều cao tự động điều chỉnh để giữ tỉ lệ ảnh */
-    display: block; /* Loại bỏ khoảng trắng bên dưới ảnh */
-    border-radius: 8px; /* Bo tròn nhẹ các góc ảnh */
-}
-
-/* CSS cho .wiki-item */
-.wiki-item {
-    margin: 10px 10px; /* Khoảng cách bên trái và bên phải là 10px */
-    border-radius: 10px; /* Bo tròn nhẹ các góc của phần tử */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng đổ */
-    overflow: hidden; /* Cắt các nội dung thừa khỏi phần tử */
-    background-color: white; /* Đặt nền trắng để dễ nhìn */
-}
-
-/* CSS cho .wiki-content */
-.wiki-content {
-    padding: 15px; /* Thêm khoảng cách đều cho tất cả các cạnh */
-}
-
 /* Đặt lại các thiết lập mặc định cho body */
 body {
     margin: 0;
@@ -27,9 +5,16 @@ body {
     background-color: #f0f0f0;
 }
 
+/* Căn chỉnh cho container chính */
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
 /* Thiết lập cho hình ảnh */
 .wiki-img {
-    width: 100%; /* Ảnh chiếm toàn bộ chiều rộng của thẻ chứa */
+    width: 100%;
     height: auto;
     display: block;
     border-radius: 8px;
@@ -42,38 +27,42 @@ body {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     background-color: white;
+    text-align: center; /* Để căn giữa tiêu đề */
 }
 
-/* Thiết lập cho wiki-content */
+/* Căn giữa tiêu đề trong wiki item */
+.wiki-header {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.5rem;
+}
+
+/* Thiết lập cho wiki-content trên màn hình di động */
 .wiki-content {
     padding: 15px;
 }
 
-/* Đặt lại các thiết lập mặc định cho body */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-}
+/* Media Query cho màn hình desktop (từ 600px trở lên) */
+@media (min-width: 600px) {
+    .wiki-content {
+        display: flex;
+        align-items: center;
+        gap: 20px; /* Khoảng cách giữa văn bản và ảnh */
+    }
 
-/* Thiết lập cho hình ảnh */
-.wiki-img {
-    width: 100%; /* Ảnh chiếm toàn bộ chiều rộng của thẻ chứa */
-    height: auto;
-    display: block;
-    border-radius: 8px;
-}
+    /* Căn chỉnh wiki-text và img-container cho desktop */
+    .wiki-text {
+        width: 50%;
+        text-align: left; /* Căn lề trái cho văn bản */
+    }
 
-/* Thiết lập cho wiki-item */
-.wiki-item {
-    margin: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    background-color: white;
-}
+    .img-container {
+        width: 50%;
+    }
 
-/* Thiết lập cho wiki-content */
-.wiki-content {
-    padding: 15px;
+    /* Đảm bảo ảnh chiếm hết img-container */
+    .wiki-img {
+        width: 100%;
+        height: auto;
+    }
 }
